@@ -15,4 +15,4 @@ $where=array(
 		"param"=>""
 		)
 	);
-$db->select('*','bands',$where);
+$db->select('*,test|tester,dorst','bands',$where);
