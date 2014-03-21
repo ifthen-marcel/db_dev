@@ -17,7 +17,7 @@ class db {
 	
 	public function __construct() {
 		try{
-			$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+			$dbh = new PDO("mysql:host=$ddbhost;dbname=$dbname", $dbuser, $dbpass);
 			echo 'Connected to database';
 		}catch(PDOException $e){
 			echo $e->getMessage();
