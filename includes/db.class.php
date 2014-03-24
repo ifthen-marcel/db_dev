@@ -45,12 +45,33 @@ class db {
 	 * @param Array $where (array containing sub-arrays per equation (column=>columnname, value=>value, param=>AND,OR)
 	 */
 	public function select($what,$from,$where){
-		/* prepare the SQL statement */
-		
-		/*
-		 * COLUMNS START
-		 */
-		
+		$whatString = $this->prepareColumns($what); //prepare columns 
+		$whereString = $this->prepareWhere($where);
+	
+		$stmt = $this->dbh->prepare("SELECT $whatString FROM $from WHERE $whereString");//
+
+		// bind the parameters (insert the values)
+		foreach($where as $field=>$value){
+			$stmt->bindParam(':'.$value['column'], $value['value']);
+		}
+
+		// finally execute the prepared statement 
+		$stmt->execute();
+	}
+
+
+		// fetch the results
+//		$result = $stmt->fetchAll();
+//
+//		// loop through the results
+//		
+//		foreach($result as $row){
+//			echo $row['newname'].'-';
+//			echo $row['type'].'<br />';
+//		}
+//	}
+	
+	private function prepareColumns($what){
 		$whatProc=array();//array to store columns in
 		//split $what, add possible aliases and enclose by backticks
 		$whatArr=explode(',',$what);
@@ -66,42 +87,17 @@ class db {
 				}
 			}
 		}
-		$whatString=implode(',',$whatProc);//implode array to create string for stmt
-		 
-		/*
-		 * WHERE START
-		 */
+		return implode(',',$whatProc);//implode array to create string for stmt	and return
+	}
+	private function prepareWhere($where){
 		/** 
 		 * @todo add feature to decide on compare (=, >, >=, != etc)
 		 */
 		$whereString="";
 		foreach($where as $field=>$value){
-			$whereString.=" ";//you can never add too much space, so we just add it to be sure ;-)
+			$whereString.=" ";//you can never add too many spaces, so we just add it to be sure ;-)
 			$whereString.=$value['column']."=:".$value['column']." ".$value['param'];//remember, it's a prepared statement, so we add placeholders here, not the final value, that happens when we bind the parameters
 		}
-		$stmt = $this->dbh->prepare("SELECT $whatString FROM $from WHERE $whereString");//
-		
-		// bind the parameters (insert the values)
-		foreach($where as $field=>$value){
-			$stmt->bindParam(':'.$value['column'], $value['value']);
-		}
-
-		// finally execute the prepared statement 
-		$stmt->execute();
-
-
-/**
- *  TEST lines follow below
- */
-
-		// fetch the results
-		$result = $stmt->fetchAll();
-
-		// loop through the results
-		
-		foreach($result as $row){
-			echo $row['newname'].'-';
-			echo $row['type'].'<br />';
-		}
+		return $whereString;
 	}
 }
