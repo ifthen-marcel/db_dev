@@ -15,4 +15,23 @@ $where=array(
 		"param"=>""
 		)
 	);
-$db->select('*,name|newname','bands',$where);
+
+/** 
+ * types of select to cover
+ */
+$db->select('*','bands'); //select * from table
+$db->select('*,name|newname','bands',$where);//select * from table where 1=1
+
+/** 
+ * types of insert to cover
+ */
+
+/**
+ * types of update to cover
+ */
+
+/** 
+ * types of delete to cover
+ */
+
+
