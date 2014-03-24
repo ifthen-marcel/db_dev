@@ -84,7 +84,7 @@ class db {
 		$whereString="";
 		foreach($where as $value){
 			$whereString.=" ";//you can never add too many spaces, so we just add it to be sure ;-)
-			$whereString.=$value['column']."=:".$value['column']." ".$value['param'];//remember, it's a prepared statement, so we add placeholders here, not the final value, that happens when we bind the parameters
+			$whereString.=$value[0]."=:".$value[0]." ".$value[3];//remember, it's a prepared statement, so we add placeholders here, not the final value, that happens when we bind the parameters
 		}
 		return $whereString;
 	}
