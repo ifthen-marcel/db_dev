@@ -100,7 +100,7 @@ class db {
 		// loop through the results
 		
 		foreach($result as $row){
-			echo $row['name'].'-';
+			echo $row['newname'].'-';
 			echo $row['type'].'<br />';
 		}
 	}
