@@ -9,6 +9,7 @@
 //include defaults
 require_once('./includes/defaults.inc.php');
 
+
 class db {
 	private $dbhost=DBHOST;
     private $dbname=DBNAME;
@@ -66,7 +67,7 @@ class db {
 			}
 		}
 		$whatString=implode(',',$whatProc);//implode array to create string for stmt
-		
+		 
 		/*
 		 * WHERE START
 		 */
